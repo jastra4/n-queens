@@ -78,6 +78,23 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+
+    hasNoneInRow: function(rowIndex) {
+      var pieces = 0;
+      var testRow = this.get(rowIndex);
+      if (testRow){
+        for (var i = 0; i < testRow.length; i++) {
+          pieces += testRow[i];
+        }
+        if (pieces === 0) {
+          return true;
+        } else {
+          return false; // fixme
+        }
+      }
+    },
+
+
     hasRowConflictAt: function(rowIndex) {
       var pieces = 0;
       var testRow = this.get(rowIndex);
@@ -109,6 +126,22 @@
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
+
+    hasNoneInCol: function(colIndex) {
+      let pieces = 0;
+      const size = this.get('n');
+
+      for (let i = 0; i < size; i++){
+        pieces += this.get(i)[colIndex];
+      }
+
+      if (pieces === 0){
+        return true
+      } else {
+        return false;
+      }
+    },
+
     hasColConflictAt: function(colIndex) {
       let pieces = 0;
       const size = this.get('n');
