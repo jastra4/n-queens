@@ -25,6 +25,7 @@
     },
 
     togglePiece: function(rowIndex, colIndex) {
+      //console.log(' remove piece at: ', rowIndex, colIndex, ' on: ', this);
       this.get(rowIndex)[colIndex] = + !this.get(rowIndex)[colIndex];
       this.trigger('change');
     },
@@ -128,6 +129,7 @@
     // test if a specific column on this board contains a conflict
 
     hasNoneInCol: function(colIndex) {
+      //console.log('ran');
       let pieces = 0;
       const size = this.get('n');
 
@@ -143,6 +145,7 @@
     },
 
     hasColConflictAt: function(colIndex) {
+      //console.log('ran ', colIndex);
       let pieces = 0;
       const size = this.get('n');
 
@@ -159,6 +162,7 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      //console.log('ran');
       const size = this.get('n');
 
       for (let i = 0; i < size; i++){
