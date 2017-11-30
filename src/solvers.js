@@ -36,51 +36,65 @@ window.countNRooksSolutions = function(n) {
 
   const board = new Board({'n': n});
 
-  const realBoard = board._currentAttributes;
+  if (n === 1){ return 1 }
+  if (n === 2){ return 2 };
 
-  //Place rook at (0,0)
-  board.togglePiece(0,0);
+  function checkRow(rowIndex, n, board){
+    for (let i = 0; i < board.get(rowIndex).length; i++){
+      if (board.hasNoneInCol(i)){
+        board.togglePiece(rowIndex, i);
+        if (!board.hasAnyRowConflicts() && !board.hasAnyColConflicts()){
+          const prevToggle = [rowIndex, i];
+          if (board.get(rowIndex+1)){
+            checkRow(rowIndex+1, n, board);
+          } else {
+            solutionCount++;
+            board.togglePiece(rowIndex, i);
+            board.togglePiece(prevToggle[0], prevToggle[1]);
 
-  function checkSubsequentRow (row,n){
-
-  }
-
-  // Loop through every row
-  for (let i = 0; i < n; i++){
-    if (board.hasNoneInRow(i)){
-      // Loop through every col in that row
-      for (let j = 0; j < n; j++){
-        if (board.hasNoneInCol(j)){
-          board.togglePiece(i, j);
-          if (board.hasNoneInRow(i+1)){
-            // loop through every col in subsequent row
-            for (let k = 0; k < n; k++){
-              if (board.hasNoneInCol(k)){
-                board.togglePiece(i+1, k);
-                if (board.hasNoneInRow(i+2)){
-                  // checking last row
-                  for (let l = 0; l < n; l++){
-                    if (board.hasNoneInCol(l)){
-                      solutionCount++;
-                    }
-                  }
-                }
-              } else {
-                continue;
-              }
-              board.togglePiece(i+1, k);
-            }
           }
-        } else {
-          continue;
         }
-        board.togglePiece(i, j);
+      } else {
+        continue;
       }
-    } else {
-      continue;
     }
   }
-
+  checkRow(0, n, board);
+  // Loop through every row
+  // for (let i = 0; i < n; i++){
+  //   if (board.hasNoneInRow(i)){
+  //     // Loop through every col in that row
+  //     for (let j = 0; j < n; j++){
+  //       if (board.hasNoneInCol(j)){
+  //         board.togglePiece(i, j);
+  //         if (board.hasNoneInRow(i+1)){
+  //           // loop through every col in subsequent row
+  //           for (let k = 0; k < n; k++){
+  //             if (board.hasNoneInCol(k)){
+  //               board.togglePiece(i+1, k);
+  //               if (board.hasNoneInRow(i+2)){
+  //                 // checking last row
+  //                 for (let l = 0; l < n; l++){
+  //                   if (board.hasNoneInCol(l)){
+  //                     solutionCount++;
+  //                   }
+  //                 }
+  //               }
+  //             } else {
+  //               continue;
+  //             }
+  //             board.togglePiece(i+1, k);
+  //           }
+  //         }
+  //       } else {
+  //         continue;
+  //       }
+  //       board.togglePiece(i, j);
+  //     }
+  //   } else {
+  //     continue;
+  //   }
+  // }
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
